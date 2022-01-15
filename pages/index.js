@@ -11,9 +11,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar/>
-      <div className='flex h-5/6 justify-center items-center flex-col'>
-        <h3 className=' text-3xl mb-3'>Welcome To zyx3d.xyz</h3>
-        <p className='mb-10 text-gray-500'>Currently Support: .gltf, .obj, .glb</p>
+      <div className='flex h-full justify-center items-center flex-col w-full'>
+        
         <DragDropFile/>
       </div>
 

@@ -2,8 +2,8 @@ import React from "react";
 
 const Navbar = () => {
     return(
-        <nav>
-          <ul className='flex justify-end gap-3 mx-10 pt-5 h-1/6'>
+        <nav className="w-full bg-gray-50 z-10 borders">
+          <ul className='flex justify-end gap-3 p-5'>
             <li className='mr-auto'>
               <a className='hover:to-blue-600'>
                 Home

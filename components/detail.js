@@ -11,38 +11,52 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { DDSLoader } from "three-stdlib";
 import { Suspense } from "react";
 
-import { Environment, OrbitControls, ContactShadows } from "@react-three/drei";
+import { Environment, OrbitControls, ContactShadows, Loader } from "@react-three/drei";
 import { withRouter } from "next/router";
+import { ObjectLoader } from "three";
+import { LoadingManager } from "three";
 
 THREE.DefaultLoadingManager.addHandler(/\.dds$/i, new DDSLoader());
 
-const Model = () => {
-    const obj = useLoader(OBJLoader, '/cat.obj');
-    return <primitive object={obj} />
+
+const getLoader = (extensions, file) => {
+    if(extensions == 'obj'){
+        const loader = new THREE.ObjectLoader();
+        return {loader, Loader: OBJLoader};
+    }else if(extensions == 'gltf'){
+        const loader = new GLTFLoader();
+        return {loader, Loader: GLTFLoader};
+    }
+    return null;
+}
+
+const Model = ({file, extensions}) => {
+    const manager = new LoadingManager();
+
+    const {loader, Loader} = getLoader(extensions, file)
+    // var loader = new THREE.ObjectLoader();
+    const result = loader.setPath(file);
+    const path = result.path; 
+    // return 'asd'
+    const obj = useLoader(Loader, path);
+    if(extensions == 'obj') return <primitive object={obj} />
+    return <primitive object={obj.scene} />
 }
 
 const Detail = (props) => {
     const [openNavbar, SetOpenNavbar] = useState(false);
     const toggle = () => SetOpenNavbar(!openNavbar);
-
-    useEffect(()=>{
-        console.log(props.router.query)
-    }, [])
-
     return (
         <>
-            <Navbar />
-            <div className="flex flex-row">
+            {/* <div className="flex flex-row"> */}
                 {/* // sidebar menu */}
-                <div className="h-screen flex border">
-
-                    <button className="px-3 h-16 flex" onClick={toggle}>
+                <div className="h-full flex-1 border">
+                    <button className="px-3 h-16" onClick={toggle}>
                         <BiCube className="hover:text-blue-500 text-3xl" />
                     </button>
-                        <div className={`${openNavbar ? 'd-block' : 'd-none'}`}>lorem lorem lorem</div>
                 </div>
                 {/* // window */}
-                <div className="h-screen flex-1">
+                <div className="h-full grow">
                     <div className=" z-50 bg-white rounded absolute ml-3 mt-3 flex gap-2 py-2 px-2">
                         <div className=" border-r-2">
                             <AiOutlineZoomIn className="hover:text-blue-500 hover:cursor-pointer text-3xl text-gray-600" />
@@ -56,7 +70,7 @@ const Detail = (props) => {
                     </div>
                     <Canvas>
                         <Suspense fallback={null}>
-                            <Model/>
+                            <Model file={props.file} extensions={props.extensions}/>
                             <ContactShadows
                                 opacity={0.2}
                                 width={1}
@@ -70,10 +84,10 @@ const Detail = (props) => {
                     </Canvas>
                 </div>
                 {/* // sidebar detail */}
-                <div className="h-screen w-80 border">detail goes here</div>
-            </div>
+                <div className="h-full w-80 border md:d-block d-none">detail goes here</div>
+            {/* </div> */}
         </>
     );
 }
 
-export default withRouter(Detail)
+export default Detail;
