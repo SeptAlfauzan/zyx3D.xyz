@@ -15,6 +15,7 @@ import { Environment, OrbitControls, ContactShadows, Loader } from "@react-three
 import { withRouter } from "next/router";
 import { ObjectLoader } from "three";
 import { LoadingManager } from "three";
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
 THREE.DefaultLoadingManager.addHandler(/\.dds$/i, new DDSLoader());
 
@@ -26,6 +27,9 @@ const getLoader = (extensions, file) => {
     }else if(extensions == 'gltf'){
         const loader = new GLTFLoader();
         return {loader, Loader: GLTFLoader};
+    }else if(extensions == 'fbx'){
+        const loader = new FBXLoader();
+        return {loader, Loader: FBXLoader};
     }
     return null;
 }
@@ -39,8 +43,8 @@ const Model = ({file, extensions}) => {
     const path = result.path; 
     // return 'asd'
     const obj = useLoader(Loader, path);
-    if(extensions == 'obj') return <primitive object={obj} />
-    return <primitive object={obj.scene} />
+    if(extensions == 'gltf') return <primitive object={obj.scene} />
+    return <primitive object={obj} />
 }
 
 const Detail = (props) => {

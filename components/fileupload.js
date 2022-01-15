@@ -47,7 +47,7 @@ function DragDropFile(params) {
             {!uploaded && (
                 <div className="w-3/4 flex-row">
                     <h3 className=' text-3xl mb-3  text-center'>Welcome To zyx3d.xyz</h3>
-                    <p className='mb-10 text-gray-500  text-center'>Currently Support: .gltf, .obj</p>
+                    <p className='mb-10 text-gray-500  text-center'>Currently Support: .gltf, .obj, .fbx</p>
 
                     <div id='dropfile-container' className={`${enter ? 'border-black bg-gray-400' : 'border-gray-300'} transition-all duration-100 w-full rounded-2xl border-2 h-80 flex items-center justify-center relative`}>
                         <p>Drop your file here</p>
