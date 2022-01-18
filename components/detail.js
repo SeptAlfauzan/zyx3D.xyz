@@ -33,8 +33,8 @@ const getLoader = (extensions, file) => {
 }
 
 const Model = ({ file, extensions }) => {
-    const [properties, setProperties] = useState(null);
-    const manager = new LoadingManager();
+    // const [properties, setProperties] = useState(null);
+    // const manager = new LoadingManager();
 
     const { loader, Loader } = getLoader(extensions, file)
     // var loader = new THREE.ObjectLoader();
@@ -42,7 +42,7 @@ const Model = ({ file, extensions }) => {
     const path = result.path;
     // return 'asd'
     const obj = useLoader(Loader, path);
-    setProperties(obj);
+    // setProperties(obj);
     if (extensions == 'gltf') return <primitive object={obj.scene} />
     return <primitive object={obj} />
 }
@@ -54,10 +54,10 @@ const Detail = (props) => {
     const canvasParent = useRef(null);
     const detailBar = useRef(null);
     const modelRef = useRef(null);
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        console.log(JSON.stringify(size) == JSON.stringify([0,0]))
-    },[])
+    //     console.log(JSON.stringify(size) == JSON.stringify([0,0]))
+    // },[])
         
     useLayoutEffect(() => {
 
